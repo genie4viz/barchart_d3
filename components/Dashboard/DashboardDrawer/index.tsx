@@ -6,6 +6,9 @@ import Button from '@app/components/Button';
 import DrawerFrame from '@app/components/Dashboard/DrawerFrame';
 import Panel from '@app/components/Dashboard/Panel';
 import SeperateBar from '@app/components/Dashboard/SeperateBar';
+import PieChart from '@app/components/Dashboard/Chart/components/PieChart';
+import BarChart from '@app/components/Dashboard/Chart/components/BarChart';
+import fake from '@app/components/Dashboard/Chart/components/fake.json';
 import { compose } from 'react-apollo';
 import { FormattedMessage, InjectedIntl, injectIntl } from 'react-intl';
 import { glyphs } from '@app/components/Icon';
@@ -58,7 +61,6 @@ const CATEGORIES: ICategory[] = [
     },
 ];
 
-
 export interface IProps {
     onClose: () => void;
     intl: InjectedIntl;
@@ -67,7 +69,21 @@ export interface IProps {
 @observer
 class DashboardDrawer extends React.Component<IProps> {
     @observable private isBlockShow = true;
-    public render() {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            loaded: false,
+        };
+    }
+
+    componentDidMount() {
+        this.setState({
+            loaded: true,
+        });
+
+    }
+    public render() {        
         const { onClose, intl: { formatMessage } } = this.props;
         return (
             <Fragment>
@@ -75,7 +91,10 @@ class DashboardDrawer extends React.Component<IProps> {
                     <DrawerFrame title={formatMessage({ id: 'pageDashboard.drawerBlock' })} onClose={onClose} >
                         <SeperateBar />
                         <Panel css={PanelStyle} width={"436px"}>
-                            <div>Content</div>
+                            <PieChart data={fake} loaded={this.state.loaded} />
+                        </Panel>
+                        <Panel css={PanelStyle} width={"436px"}>
+                            <BarChart data={fake} loaded={this.state.loaded} />
                         </Panel>
                         <Button css={ButtonStyle} onClick={() => { this.isBlockShow = false; }}>
                             <FormattedMessage id="pageDashboard.createBlock" />

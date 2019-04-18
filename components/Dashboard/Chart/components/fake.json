@@ -1,0 +1,32 @@
+[
+  {
+    "name": "name0",
+    "value": 2350,
+    "color": "#3299a0"
+  },
+  {
+    "name": "name1",
+    "value": 1000,
+    "color": "#f299a0"
+  },
+  {
+    "name": "name2",
+    "value": 500,
+    "color": "#99ffa0"
+  },
+  {
+    "name": "name3",
+    "value": 750,
+    "color": "#32ff00"
+  },
+  {
+    "name": "name4",
+    "value": 1250,
+    "color": "#00fff0"
+  },
+  {
+    "name": "name5",
+    "value": 2000,
+    "color": "#ff99ff"
+  }
+]
