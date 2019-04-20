@@ -77,5 +77,15 @@
   "pageDashboard.drawerBlock": "Blocks",
   "pageDashboard.createBlock": "Create Block",
   "pageDashboard.drawerStyle": "Choose a style",
-  "pageDashboard.next": "Next"
+  "pageDashboard.drawerCreateBlock": "Choose a block",
+  "pageDashboard.next": "Next",
+  "pageDashboard.drawerCore": "Core",
+  "pageDashboard.drawerTable": "Table",
+  "pageDashboard.drawerView": "View",
+  "pageDashboard.drawerCategoriesField": "Categories field",
+  "pageDashboard.drawerIncludeEmptyCells": "Include empty cells",
+  "pageDashboard.drawerValues": "Values",
+  "pageDashboard.drawerCount": "Count",
+  "pageDashboard.drawerField": "Field",
+  "pageDashboard.drawerAggregate": "Aggregate"
 }

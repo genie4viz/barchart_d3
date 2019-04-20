@@ -65,13 +65,6 @@ class BarChart extends React.Component{
             .call(yAxis)
             .select('.domain')
             .remove();
-        yArea.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", height/2)            
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("Sum Profit")
-            
 
         d3.select(this.ref)
             .selectAll('.tick line')            

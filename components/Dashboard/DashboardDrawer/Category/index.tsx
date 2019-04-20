@@ -14,12 +14,15 @@ export interface ICategory {
 }
 
 export interface IProps {
-    category: ICategory
+    category: ICategory,
+    selectedId: string,
+    isLast: boolean,
+    onClick: (item: IStyleItem) => void;
 }
 
 class Category extends React.Component<IProps> {
     public render() {
-        const { category } = this.props;
+        const { category, selectedId, onClick, isLast } = this.props;
 
         return (
             <Fragment>
@@ -28,10 +31,12 @@ class Category extends React.Component<IProps> {
                 </Title>
                 <Content>
                     {category.items.map((item) => (
-                        <StyleItem item={item} />
+                        <StyleItem key={item.id} item={item} onClick={onClick} isSelected={selectedId == item.id ? true : false} />
                     ))}
                 </Content>
-                <SeperateBar />
+                {!isLast &&
+                    <SeperateBar />
+                }
             </Fragment>
         );
     }

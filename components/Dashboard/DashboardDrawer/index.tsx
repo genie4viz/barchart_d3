@@ -1,116 +1,116 @@
 import React, { Fragment } from 'react';
-import { ButtonStyle, PanelStyle } from './styled';
+import { ButtonStyle, PanelStyle, ContentScroll, BottomPanel, ContentWrap } from './styled';
 
 import Button from '@app/components/Button';
 
 import DrawerFrame from '@app/components/Dashboard/DrawerFrame';
 import Panel from '@app/components/Dashboard/Panel';
 import SeperateBar from '@app/components/Dashboard/SeperateBar';
-import PieChart from '@app/components/Dashboard/Chart/components/PieChart';
-import BarChart from '@app/components/Dashboard/Chart/components/BarChart';
-import fake from '@app/components/Dashboard/Chart/components/fake.json';
-import { compose } from 'react-apollo';
 import { FormattedMessage, InjectedIntl, injectIntl } from 'react-intl';
-import { glyphs } from '@app/components/Icon';
+
+import PieChart from '@app/components/Dashboard/Chart/PieChart';
+import BarChart from '@app/components/Dashboard/Chart/BarChart';
+import CountBarChart from '@app/components/Dashboard/Chart/CountBarChart';
+import LineChart from '@app/components/Dashboard/Chart/LineChart';
+
+import { FakeData } from '@app/components/Dashboard/Chart/fake';
 
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import Category, { ICategory } from './Category';
+import { IStyleItem } from './Category/StyleItem';
+import CreateBlockModal from '@app/components/Dashboard/CreateBlockModal';
 
+enum DrawerPages {
+    BLOCKS = 'block',
+    STYLE = 'style',
+    CREAT_BLOCK = 'create_block'
+}
 
-const CATEGORIES: ICategory[] = [
-    {
-        id: 'category1',
-        title: 'Category1',
-        items: [
-            {
-                id: "cate1_pie1",
-                title: "Pie",
-                icon: "GRAPH_PIE"
-            },
-            {
-                id: "cate1_donut1",
-                title: "Donut",
-                icon: "GRAPH_DONUT"
-            },
-            {
-                id: "cate1_pie2",
-                title: "Pie",
-                icon: "GRAPH_PIE"
-            },
-            {
-                id: "cate1_donut2",
-                title: "Donut",
-                icon: "GRAPH_DONUT"
-            }
-        ]
-    },
-    {
-        id: 'category2',
-        title: 'Category2',
-        items: [
-
-        ]
-    },
-    {
-        id: 'category3',
-        title: 'Category3',
-        items: [
-
-        ]
-    },
-];
-
-export interface IProps {
+interface IProps {
     onClose: () => void;
+    categories: ICategory[];
     intl: InjectedIntl;
 }
 
+
 @observer
 class DashboardDrawer extends React.Component<IProps> {
-    @observable private isBlockShow = true;
+    @observable private pageShow: DrawerPages = DrawerPages.BLOCKS;
+    @observable private selectedStyle: IStyleItem;
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            loaded: false,
+    constructor(props: any) {
+        super(props)
+
+        this.onClickStyleItem = this.onClickStyleItem.bind(this)      
+
+        this.selectedStyle = {
+            id: "",
+            title: "",
+            style: "",
+            icon: ""
         };
     }
-
-    componentDidMount() {
-        this.setState({
-            loaded: true,
-        });
-
+    
+    private onClickStyleItem(item: IStyleItem) {
+        this.selectedStyle = item;
     }
-    public render() {        
-        const { onClose, intl: { formatMessage } } = this.props;
+
+    public render() {
+        const { onClose, intl: { formatMessage }, categories } = this.props;
         return (
             <Fragment>
-                {this.isBlockShow &&
-                    <DrawerFrame title={formatMessage({ id: 'pageDashboard.drawerBlock' })} onClose={onClose} >
+                {this.pageShow === DrawerPages.BLOCKS &&
+                    <DrawerFrame title={formatMessage({ id: 'pageDashboard.drawerBlock' })} onClose={onClose} isDrawer={true} >
                         <SeperateBar />
-                        <Panel css={PanelStyle} width={"436px"}>
-                            <PieChart data={fake} loaded={this.state.loaded} />
-                        </Panel>
-                        <Panel css={PanelStyle} width={"436px"}>
-                            <BarChart data={fake} loaded={this.state.loaded} />
-                        </Panel>
-                        <Button css={ButtonStyle} onClick={() => { this.isBlockShow = false; }}>
-                            <FormattedMessage id="pageDashboard.createBlock" />
-                        </Button>
+                        <ContentScroll>
+                            <ContentWrap>
+                                {FakeData.map((data, index) => (
+                                    <Panel key={index} css={PanelStyle} width={"436px"}>
+                                        {data.type === "PIE" &&
+                                            <PieChart data={data} width={436} height={300} showValue={true} />
+                                        }
+                                        {data.type === "BAR" &&
+                                            <BarChart data={data} width={436} height={300} />
+                                        }
+                                        {data.type === "COUNTBAR" &&
+                                            <CountBarChart data={data} width={436} height={300} />
+                                        }
+                                        {data.type === "LINE" &&
+                                            <LineChart data={data} width={436} height={300} />
+                                        }
+                                    </Panel>
+                                ))}
+                            </ContentWrap>
+                        </ContentScroll>
+                        <BottomPanel>
+                            <SeperateBar />
+                            <Button css={ButtonStyle} onClick={() => { this.pageShow = DrawerPages.STYLE; }}>
+                                <FormattedMessage id="pageDashboard.createBlock" />
+                            </Button>
+                        </BottomPanel>
                     </DrawerFrame>
                 }
-                {!this.isBlockShow &&
-                    <DrawerFrame title={formatMessage({ id: 'pageDashboard.drawerStyle' })} onClose={onClose} >
+                {this.pageShow === DrawerPages.STYLE &&
+                    <DrawerFrame title={formatMessage({ id: 'pageDashboard.drawerStyle' })} onClose={onClose} isDrawer={true} >
                         <SeperateBar />
-                        {CATEGORIES.map((category) => (
-                            <Category category={category} />
-                        ))}
-                        <Button css={ButtonStyle} onClick={() => { }}>
-                            <FormattedMessage id="pageDashboard.next" />
-                        </Button>
+                        <ContentScroll>
+                            <ContentWrap>
+                                {categories.map((category, index) => (
+                                    <Category key={category.id} category={category} onClick={this.onClickStyleItem} selectedId={this.selectedStyle.id} isLast={categories.length - 1 === index} />
+                                ))}
+                            </ContentWrap>
+                        </ContentScroll>
+                        <BottomPanel>
+                            <SeperateBar />
+                            <Button css={ButtonStyle} onClick={() => { this.pageShow = DrawerPages.CREAT_BLOCK; }} isDisabled={this.selectedStyle.id == ""}>
+                                <FormattedMessage id="pageDashboard.next" />
+                            </Button>
+                        </BottomPanel>
                     </DrawerFrame>
+                }
+                {this.pageShow === DrawerPages.CREAT_BLOCK &&
+                    <CreateBlockModal graphStyle={this.selectedStyle} onClose={onClose} />
                 }
             </Fragment>
         );

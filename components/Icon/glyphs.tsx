@@ -549,7 +549,8 @@ const Glyphs: { [key: string]: any } = {
     viewBox: '0 0 56 56',
     data: (
       <svg width="56" height="56" xmlns="http://www.w3.org/2000/svg">
-        <path d="M26.917 27.413L7.387 46.948A27.911 27.911 0 0 1 0 27.992C0 12.837 12.035.492 27.067 0v27l-.15.413zm1.387 1.253l25.829 9.404C50.088 48.559 39.913 56 28 56a27.9 27.9 0 0 1-19.304-7.72l19.608-19.614zm.63-1.758V0C43.964.492 56 12.837 56 27.992c0 2.895-.439 5.687-1.254 8.314l-25.813-9.398z" fill="#889" fill-rule="evenodd" />
+        <path d="M26.917 27.413L7.387 46.948A27.911 27.911 0 0 1 0 27.992C0 12.837 12.035.492 27.067 0v27l-.15.413zm1.387 1.253l25.829 9.404C50.088 48.559 39.913 56 28 56a27.9 27.9 0 0 1-19.304-7.72l19.608-19.614zm.63-1.758V0C43.964.492 56 12.837 56 27.992c0 2.895-.439 5.687-1.254 8.314l-25.813-9.398z"
+          fill="currentColor" fillRule="evenodd" />
       </svg>
     ),
   },
@@ -557,25 +558,26 @@ const Glyphs: { [key: string]: any } = {
     viewBox: '0 0 56 56',
     data: (
       <svg width="56" height="56" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7.355 46.91l9.258-9.258a14.905 14.905 0 0 0 11.395 5.278c7.936 0 14.426-6.19 14.908-14.004H56C55.508 43.962 43.163 56 28.008 56c-8.176 0-15.533-3.503-20.653-9.09zM6.136 45.49A27.89 27.89 0 0 1 0 27.992C0 12.837 12.038.492 27.074 0v13.084c-7.815.482-14.004 6.972-14.004 14.908 0 3.006.888 5.804 2.416 8.147l-9.35 9.35zm36.78-18.43c-.463-7.506-6.469-13.512-13.975-13.975V0C43.667.482 55.518 12.333 56 27.059H42.916z" fill="#889" fill-rule="evenodd" />
+        <path d="M7.355 46.91l9.258-9.258a14.905 14.905 0 0 0 11.395 5.278c7.936 0 14.426-6.19 14.908-14.004H56C55.508 43.962 43.163 56 28.008 56c-8.176 0-15.533-3.503-20.653-9.09zM6.136 45.49A27.89 27.89 0 0 1 0 27.992C0 12.837 12.038.492 27.074 0v13.084c-7.815.482-14.004 6.972-14.004 14.908 0 3.006.888 5.804 2.416 8.147l-9.35 9.35zm36.78-18.43c-.463-7.506-6.469-13.512-13.975-13.975V0C43.667.482 55.518 12.333 56 27.059H42.916z"
+          fill="currentColor" fillRule="evenodd" />
       </svg>
     ),
   },
   GRAPH_LINE: {
-    viewBox: '0 0 56 56',
+    viewBox: '0 0 56 32',
     data: (
       <svg width="56" height="32" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" fill-rule="evenodd">
-          <circle fill="#616177" cx="4.5" cy="27.5" r="4.5" />
-          <path d="M2 30L27.834 4M28.008 3L54 15" stroke="#616177" stroke-width="2" stroke-linecap="square" />
-          <circle fill="#616177" cx="28.5" cy="4.5" r="4.5" />
-          <circle fill="#616177" cx="51.5" cy="14.5" r="4.5" />
+        <g fill="none" fillRule="evenodd">
+          <circle fill="currentColor" cx="4.5" cy="27.5" r="4.5" />
+          <path d="M2 30L27.834 4M28.008 3L54 15" stroke="currentColor" strokeWidth="2" strokeLinecap="square" />
+          <circle fill="currentColor" cx="28.5" cy="4.5" r="4.5" />
+          <circle fill="currentColor" cx="51.5" cy="14.5" r="4.5" />
         </g>
       </svg>
     ),
   },
   GRAPH_SCATTER: {
-    viewBox: '0 0 56 56',
+    viewBox: '0 0 64 49',
     data: (
       <svg width="64" height="49" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -589,7 +591,7 @@ const Glyphs: { [key: string]: any } = {
             </feMerge>
           </filter>
         </defs>
-        <g filter="url(#a)" transform="translate(4 2)" fill="#616177" fill-rule="evenodd">
+        <g filter="url(#a)" transform="translate(4 2)" fill="currentColor" fillRule="evenodd">
           <circle cx="4.5" cy="36.5" r="4.5" />
           <circle cx="28.5" cy="4.5" r="4.5" />
           <circle cx="51.5" cy="23.5" r="4.5" />
@@ -601,7 +603,8 @@ const Glyphs: { [key: string]: any } = {
     viewBox: '0 0 56 56',
     data: (
       <svg width="56" height="56" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2 35h11.556a2 2 0 0 1 2 2v17a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V37a2 2 0 0 1 2-2zM21.833 0H33.39a2 2 0 0 1 2 2v52a2 2 0 0 1-2 2H21.833a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm19.834 18.667h11.555a2 2 0 0 1 2 2V54a2 2 0 0 1-2 2H41.667a2 2 0 0 1-2-2V20.667a2 2 0 0 1 2-2z" fill="#616177" fill-rule="evenodd" />
+        <path d="M2 35h11.556a2 2 0 0 1 2 2v17a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V37a2 2 0 0 1 2-2zM21.833 0H33.39a2 2 0 0 1 2 2v52a2 2 0 0 1-2 2H21.833a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm19.834 18.667h11.555a2 2 0 0 1 2 2V54a2 2 0 0 1-2 2H41.667a2 2 0 0 1-2-2V20.667a2 2 0 0 1 2-2z"
+          fill="currentColor" fillRule="evenodd" />
       </svg>
     ),
   },

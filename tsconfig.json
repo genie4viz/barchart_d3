@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
     "paths": {
       "@app/*": ["*"]
     },
@@ -21,8 +19,7 @@
     "removeComments": false,
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true,
-    "strictPropertyInitialization": false
+    "strict": true
   },
   "include": ["./"],
   "exclude": ["./node_modules"]
