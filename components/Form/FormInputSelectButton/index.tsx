@@ -21,6 +21,7 @@ export interface ISelectProps extends FieldRenderProps<HTMLElement> {
     isSmall?: boolean;
     isIntl?: boolean;
     intl: InjectedIntl;
+    onClick: (value: any) => void;
 }
 
 @observer
@@ -37,6 +38,7 @@ class FormInputSelectButton extends React.PureComponent<ISelectProps> {
             isSmall,
             options,
             intl: { formatMessage },
+            onClick,
             isIntl,
         } = this.props;
 
@@ -46,7 +48,7 @@ class FormInputSelectButton extends React.PureComponent<ISelectProps> {
 
                 <ButtonContainer>
                     {options.map((option: IOption, index: number) => (
-                        <Option key={index} isSelected={index === this.selectedIndex} onClick={() => this.handleClickOption(option, index)} data-index={index}>
+                        <Option key={index} isSelected={index === this.selectedIndex} onClick={() => { this.selectedIndex = index; onClick(option.value) }} data-index={index}>
                             {isIntl ? formatMessage({ id: option.name }) : option.name}
                         </Option>
                     ))}
@@ -54,14 +56,6 @@ class FormInputSelectButton extends React.PureComponent<ISelectProps> {
             </Container>
         );
     }
-
-    private handleClickOption = (option: IOption, index: number) => {
-        const {
-            input: { onChange },
-        } = this.props;
-        onChange(option.value as any);
-        this.selectedIndex = index;
-    };
 }
 
 export default injectIntl(FormInputSelectButton);

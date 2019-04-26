@@ -18,6 +18,8 @@ import BarChart from '@app/components/Dashboard/Chart/BarChart';
 import LineChart from '@app/components/Dashboard/Chart/LineChart';
 
 import { FakeData } from '@app/components/Dashboard/Chart/fake';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 
 interface IProps {
     onClose: () => void;
@@ -29,7 +31,9 @@ interface IState {
     isLoaded: boolean;
 }
 
+@observer
 class CreateBlockModal extends React.Component<IProps, IState> {
+    @observable private isCountChart: boolean = true;
     constructor(props: any) {
         super(props)
 
@@ -57,10 +61,10 @@ class CreateBlockModal extends React.Component<IProps, IState> {
                             <PieChart data={data} width={560} height={560} showValue={true} />
                         }
                         {graphStyle.style === "BAR" &&
-                            <BarChart data={data} width={700} height={560} />
+                            <BarChart data={data} width={700} height={560} isCountChart={this.isCountChart} />
                         }
                         {graphStyle.style === "LINE" &&
-                            <LineChart data={data} width={700} height={560} />
+                            <LineChart data={data} width={700} height={560} isCountChart={this.isCountChart} />
                         }
                     </CenterDiv>
                 </GraphView>
@@ -138,6 +142,13 @@ class CreateBlockModal extends React.Component<IProps, IState> {
                                                     { name: formatMessage({ id: 'pageDashboard.drawerCount' }), value: '1' },
                                                     { name: formatMessage({ id: 'pageDashboard.drawerField' }), value: '2' }
                                                 ]}
+                                                onClick={(value: any) => {
+                                                    if (value == '1') {
+                                                        this.isCountChart = true;
+                                                    } else {
+                                                        this.isCountChart = false;
+                                                    }
+                                                }}
                                             />
                                             <Field
                                                 css={InputItem}

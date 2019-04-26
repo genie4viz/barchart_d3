@@ -10,7 +10,6 @@ import { FormattedMessage, InjectedIntl, injectIntl } from 'react-intl';
 
 import PieChart from '@app/components/Dashboard/Chart/PieChart';
 import BarChart from '@app/components/Dashboard/Chart/BarChart';
-import CountBarChart from '@app/components/Dashboard/Chart/CountBarChart';
 import LineChart from '@app/components/Dashboard/Chart/LineChart';
 
 import { FakeData } from '@app/components/Dashboard/Chart/fake';
@@ -42,7 +41,7 @@ class DashboardDrawer extends React.Component<IProps> {
     constructor(props: any) {
         super(props)
 
-        this.onClickStyleItem = this.onClickStyleItem.bind(this)      
+        this.onClickStyleItem = this.onClickStyleItem.bind(this)
 
         this.selectedStyle = {
             id: "",
@@ -51,7 +50,7 @@ class DashboardDrawer extends React.Component<IProps> {
             icon: ""
         };
     }
-    
+
     private onClickStyleItem(item: IStyleItem) {
         this.selectedStyle = item;
     }
@@ -71,10 +70,7 @@ class DashboardDrawer extends React.Component<IProps> {
                                             <PieChart data={data} width={436} height={300} showValue={true} />
                                         }
                                         {data.type === "BAR" &&
-                                            <BarChart data={data} width={436} height={300} />
-                                        }
-                                        {data.type === "COUNTBAR" &&
-                                            <CountBarChart data={data} width={436} height={300} />
+                                            <BarChart data={data} width={436} height={300} isCountChart={true} />
                                         }
                                         {data.type === "LINE" &&
                                             <LineChart data={data} width={436} height={300} />

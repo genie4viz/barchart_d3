@@ -1,5 +1,5 @@
 
-import {IChartData} from '@app/components/Dashboard/Chart';
+import {IChartData} from '.';
 
 export const FakeData: IChartData[] = [
     {
@@ -7,64 +7,45 @@ export const FakeData: IChartData[] = [
         "name": 'Bar Chart',
         "XAxis": "Revenue",
         "YAxis": "Sum Profit",
-        "values": [
-            { "label": "name0", "value": 2350, "color": "steelblue" },
-            { "label": "name1", "value": 2422, "color": "steelblue" },
-            { "label": "name1", "value": 2422, "color": "steelblue" },
-            { "label": "name1", "value": 2422, "color": "steelblue" },
-            { "label": "name1", "value": 2422, "color": "steelblue" },
-            { "label": "name1", "value": 2422, "color": "steelblue" },
-            { "label": "name1", "value": 2422, "color": "steelblue" },
-            { "label": "name2", "value": 5400, "color": "steelblue" },
-            { "label": "name3", "value": 9200, "color": "steelblue" },
-            { "label": "name3", "value": 9200, "color": "steelblue" },
-            { "label": "name3", "value": 9200, "color": "steelblue" },
-            { "label": "name4", "value": 7000, "color": "steelblue" },
-            { "label": "name4", "value": 7000, "color": "steelblue" }
-        ]
-    }, {
-        "type": 'COUNTBAR',
-        "name": 'CountBar Chart',
-        "XAxis": "Revenue",
-        "YAxis": "Sum Profit",
-        "values": [
-            { "label": "name0", "value": 2350, "color": "steelblue" },
-            { "label": "name1", "value": 2422, "color": "steelblue" },
-            { "label": "name1", "value": 2422, "color": "steelblue" },
-            { "label": "name1", "value": 2422, "color": "steelblue" },
-            { "label": "name1", "value": 2422, "color": "steelblue" },
-            { "label": "name1", "value": 2422, "color": "steelblue" },
-            { "label": "name1", "value": 2422, "color": "steelblue" },
-            { "label": "name2", "value": 5400, "color": "steelblue" },
-            { "label": "name3", "value": 9200, "color": "steelblue" },
-            { "label": "name3", "value": 9200, "color": "steelblue" },
-            { "label": "name3", "value": 9200, "color": "steelblue" },
-            { "label": "name4", "value": 7000, "color": "steelblue" },
-            { "label": "name4", "value": 7000, "color": "steelblue" }
-        ]
+        "values": [{"label":"Raff","value":106,"color":"#be7ca6"},        
+        {"label":"Christina","value":368,"color":"#70fbb5"},
+        {"label":"Bernadette","value":472,"color":"#c7eaa1"},
+        {"label":"Kelsi","value":399,"color":"#94d23a"},
+        {"label":"Allison","value":292,"color":"#cb54dc"},
+        {"label":"Ivar","value":340,"color":"#d8f1d3"},
+        {"label":"Benntt","value":128,"color":"#3bb91c"},
+        {"label":"Ivar","value":320,"color":"#d8f1d3"},
+        {"label":"Nial","value":89,"color":"#25bc4a"},
+        {"label":"Jany","value":224,"color":"#d7d215"}]
     },{
         "type": 'PIE',
         "name": 'Pie Chart',
         "XAxis": "Revenue",
         "YAxis": "Sum Profit",
-        "values": [
-            { "label": "name0", "value": 2350, "color": "#23ff23" },
-            { "label": "name1", "value": 1412, "color": "#f09211" },
-            { "label": "name2", "value": 5400, "color": "#8f0921" },
-            { "label": "name3", "value": 9200, "color": "#f0ef21" },
-            { "label": "name4", "value": 7000, "color": "#f09fee" }
-        ]
+        "values": [{"label":"Raff","value":106,"color":"#be7ca6"},        
+        {"label":"Christina","value":368,"color":"#70fbb5"},
+        {"label":"Bernadette","value":472,"color":"#c7eaa1"},
+        {"label":"Kelsi","value":399,"color":"#94d23a"},
+        {"label":"Allison","value":292,"color":"#cb54dc"},
+        {"label":"Ivar","value":340,"color":"#d8f1d3"},
+        {"label":"Benntt","value":128,"color":"#3bb91c"},
+        {"label":"Ivar","value":320,"color":"#d8f1d3"},
+        {"label":"Nial","value":340,"color":"#25bc4a"},
+        {"label":"Jany","value":224,"color":"#d7d215"}]
     }, {
         "type": 'LINE',
         "name": 'Line Chart',
         "XAxis": "Revenue",
         "YAxis": "Sum Profit",
-        "values": [
-            { "label": "name0", "value": 2350, "color": "#23ff23" },
-            { "label": "name1", "value": 2422, "color": "#f09211" },
-            { "label": "name2", "value": 5400, "color": "#8f0921" },
-            { "label": "name3", "value": 9200, "color": "#f0ef21" },
-            { "label": "name4", "value": 7000, "color": "#f09fee" }
-        ]
+        "values": [{"label":"Raff","value":106,"color":"#be7ca6"},        
+        {"label":"Christina","value":368,"color":"#70fbb5"},
+        {"label":"Bernadette","value":472,"color":"#c7eaa1"},
+        {"label":"Kelsi","value":399,"color":"#94d23a"},
+        {"label":"Allison","value":292,"color":"#cb54dc"},
+        {"label":"Ivar","value":340,"color":"#d8f1d3"},
+        {"label":"Benntt","value":128,"color":"#3bb91c"},
+        {"label":"Ivar","value":320,"color":"#d8f1d3"},
+        {"label":"Nial","value":340,"color":"#25bc4a"},
+        {"label":"Jany","value":224,"color":"#d7d215"}]
     }
 ];
