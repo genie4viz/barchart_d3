@@ -1,107 +1,100 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 import { IChartData } from '..';
-import useDimensions from '../UseDimensions';
 
 interface IProps {
-    data: IChartData;    
+    data: IChartData;
     showValue: boolean;
     idx?: number;
     showLimit: number;
+    width: number;
+    height: number;
 }
 
 const PieChart: React.SFC<IProps> = (props) => {
-    const {data, showValue, idx, showLimit} = props,
-          idx_str = idx != null ? idx : '';
-    const svgRef = useRef(null);    
-    const [containerRef, dimens] = useDimensions();    
-    const width = Math.max(dimens.width, 280), height = Math.max(dimens.height, 280);
+    const { data, showValue, idx, showLimit, width, height } = props,
+        idx_str = idx != null ? idx : '',
+        radius = Math.min(width, height) / 2;
+        
+    const graphRef = useRef(null);
+    const cache = useRef(data);    
     
-    useEffect(() => drawChart(), [dimens, data]);
+    const createPie: any = d3
+        .pie()
+        .value((d: any) => d.value)
+        .sort(null);
 
-    const drawChart = () => {        
-        
-        let margins = { top: 20, left: 20, bottom: 20, right: 20 };
-        
-        if (data == null) return;        
-        
-        let radius = Math.min(width, height) / 2;
-        d3.select(svgRef.current).selectAll("*").remove();
-        let svg = d3.select(svgRef.current).append("g")
-            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-        
-        const tooltip = svg.append('g');
-        
-        let arc0: any = d3.arc()
-            .outerRadius(radius)
-            .innerRadius(radius-1)
+    const createArc = d3
+        .arc()
+        .innerRadius(radius - 10)
+        .outerRadius(0);
 
-        let arc: any = d3.arc()
-            .outerRadius(radius - 10)
-            .innerRadius(0)
+    useEffect(() => drawChart(), [props]);
+    
+    const drawChart = () => {
 
-        // let labelArc0 = d3.arc()
-        //     .outerRadius(radius - radius / 2)
-        //     .innerRadius(radius - radius / 2);
-        let labelArc = d3.arc()
-            .outerRadius(radius)
-            .innerRadius(radius/2);
-
-        let pie = d3.pie()
-            .sort(null)
-            .value((d: any) => d.value);       
-
-        let g: any = svg.selectAll(".arc")
-            .data(pie(data.values))
+        if (data == null) return;
+        
+        const curData = createPie(data.values);
+        const prevData = createPie(cache.current.values);
+        
+        const group = d3.select(graphRef.current);
+        const groupWithData = group.selectAll("g.arc").data(curData);
+        const tooltip = group.append('g');
+        groupWithData.exit().remove();
+        const groupWithUpdate = groupWithData
             .enter()
+            .append("g")
+            .attr("class", "arc");
 
-        g.append("path")            
-            .attr("d", arc0)
+        const path = groupWithUpdate
+            .append("path")
+            .merge(groupWithData.select("path.arc"));
+
+        const arcTween: any = (d: any, i: any) => {            
+            const interpolator = d3.interpolate(prevData[i], d);
+            return (t: any) => createArc(interpolator(t));
+        };
+        path
+            .attr("class", "arc")
+            .attr("fill", (d: any, i) => d.data.color)
             .attr("stroke", 'white')
-            .attr("stroke-width", 1)
-            .style("fill", (d: any) => d.data.color)
-            .attr('cursor', 'pointer')
+            .attr("stroke-width", 2)
             .on("mouseover", (d: any) => {
-                tooltip.attr('transform', "translate(" + labelArc.centroid(d)[0] + ',' + (labelArc.centroid(d)[1]) + ")").call(callout, d);
+                tooltip.attr('transform', "translate(" + createArc.centroid(d) + ")").call(callout, d);
                 tooltip.raise();
             })
             .on("mouseout", () => tooltip.call(callout, null))
+            .transition()
+            .attrTween("d", arcTween)
 
-        g.selectAll('path')
-            .transition().duration(500)
-            .attr('d', arc)
-            
-        if(data.values.length < showLimit){
-            g.append("text")
-                .attr("transform", (d: any) => "translate(" + labelArc.centroid(d) + ")")            
-                .attr('fill', "white")
-                .attr('font-size', '12pt')
-                .attr('text-anchor', 'middle')
-                .text((d: any) => (d.data.label));
-            if(showValue){
-                g.append("text")
-                    .attr("transform", (d: any) => "translate(" + labelArc.centroid(d)[0] + "," + (labelArc.centroid(d)[1] + 15) + ")")            
+        if (data.values.length < showLimit) {
+            const text = groupWithUpdate
+                .append("text")
+                .merge(groupWithData.select("text"));
+            text
+                .attr("text-anchor", "middle")
+                .attr("alignment-baseline", "middle")            
+                .style("fill", "white")
+                .style("font-size", 12)
+                .transition()
+                .attr("transform", (d: any) => `translate(${createArc.centroid(d)})`)
+                .text((d: any) => d.data.label)
+            if (showValue) {
+                groupWithData.append("text")
+                    .attr("transform", (d: any) => "translate(" + createArc.centroid(d)[0] + "," + (createArc.centroid(d)[1] + 15) + ")")
                     .attr('fill', "white")
                     .attr('font-size', '12pt')
                     .attr('text-anchor', 'middle')
                     .text((d: any) => (d.data.value));
             }
         }
-        
-        d3.select(svgRef.current)
-            .append("text")            
-            .attr("x", margins.left)
-            .attr("y", margins.top)            
-            .attr('font-size', '16pt')
-            .attr('fill', 'black')
-            .style("text-anchor", "start")
-            .text(data.name)
         const callout = (g: any, d: any) => {
-            if (!d){
+            if (!d) {
                 g.selectAll("*").remove();
                 return g.style('display', 'none');
             }
-            
+
             g.style('display', null).style('pointer-events', 'none')
 
             const path = g.selectAll("path")
@@ -118,25 +111,27 @@ const PieChart: React.SFC<IProps> = (props) => {
                     .selectAll("tspan")
                     .data((strText + "").split(/\n/))
                     .join("tspan")
-                        .attr('fill', 'white')
-                        .attr('text-anchor', 'start')                        
-                        .attr("x", 0)
-                        .attr("y", (d: any, i: any) => `${i * 1.1}em`)                            
-                        .text((d: any) => d));
+                    .attr('fill', 'white')
+                    .attr('text-anchor', 'start')
+                    .attr("x", 0)
+                    .attr("y", (d: any, i: any) => `${i * 1.1}em`)
+                    .text((d: any) => d));
 
-            const {width: tw, height: th} = text.node().getBBox();            
-            
+            const { width: tw, height: th } = text.node().getBBox();
+
             text.attr("transform", 'translate(0, 5)')
             path
-                .attr("transform", 'translate(-10,' + (th/2 - 10) + ')')
-                .attr("d", 'M0,0l5,-5v' + (-(th - 10)/2) + 'h' + (tw + 10) + 'v' + th + 'h' + (-(tw + 10)) + 'v' + (-(th - 10)/2) +'l-5,-5z')
-    
+                .attr("transform", 'translate(-10,' + (th / 2 - 10) + ')')
+                .attr("d", 'M0,0l5,-5v' + (-(th - 10) / 2) + 'h' + (tw + 10) + 'v' + th + 'h' + (-(tw + 10)) + 'v' + (-(th - 10) / 2) + 'l-5,-5z')
+
         }
+        cache.current = props.data;
     }
     return (
-        <div ref={containerRef}>
-            <svg className={"pieChart" + idx_str} ref={svgRef} width={width} height={height} />
-        </div>
+        <svg className={"pieChart" + idx_str} width={width} height={height}>
+            <text x={20} y={20} style={{fontSize: '16pt'}}>{data.name}</text>
+            <g ref={graphRef} transform={`translate(${width/2} ${height/2})`}/>
+        </svg>
     );
 }
 
